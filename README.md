@@ -89,4 +89,4 @@ If you arrived here searching for one of these, this is the tool: **wcag accessi
 
 <!-- RELATED:END -->
 
-→ More developer tooling like this: **[duke5am.gumroad.com](https://duke5am.gumroad.com)** <!-- GUMROAD-LINK -->
+→ **[Accessibility Audit Kit + Statement Generator](https://duke5am.gumroad.com/l/35-accessibility-audit)** — $39 on Gumroad <!-- GUMROAD-LINK -->
