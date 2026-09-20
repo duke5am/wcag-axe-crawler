@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wcag-axe-crawler"
+version = "0.1.0"
+description = "Crawl a site with headless Chromium and axe-core and write a WCAG/EN 301 549 violation report as JSON and HTML, without ever claiming conformance it cannot prove"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "duke5am" }]
+keywords = [
+  "accessibility", "a11y", "wcag", "axe-core", "en-301-549", "eaa",
+  "audit", "crawler", "playwright", "ci",
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Topic :: Internet :: WWW/HTTP :: Site Management",
+  "Topic :: Software Development :: Quality Assurance",
+  "Topic :: Software Development :: Testing",
+]
+# Playwright is deliberately NOT a hard dependency. crawl.py imports it inside
+# the crawl itself and main() turns ImportError into a readable "install it with"
+# message plus exit code 3, so --help, argument validation and `--axe-path`
+# resolution all work on an interpreter that has never seen a browser. Install
+# the extra when you actually intend to crawl.
+dependencies = []
+
+[project.optional-dependencies]
+browser = ["playwright>=1.40"]
+
+[project.scripts]
+wcag-axe-crawler = "wcag_axe_crawler.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/duke5am/wcag-axe-crawler"
+Issues = "https://github.com/duke5am/wcag-axe-crawler/issues"
+
+[tool.setuptools]
+packages = ["wcag_axe_crawler"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+# The axe-core 4.13.0 rule dump is reference material, not a runtime
+# dependency: the crawler gets its rules from axe-core itself, in the browser.
+wcag_axe_crawler = ["axe-rules-reference.json"]

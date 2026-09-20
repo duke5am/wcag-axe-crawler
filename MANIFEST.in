@@ -1,0 +1,3 @@
+include wcag_axe_crawler/axe-rules-reference.json
+include README.md
+include LICENSE

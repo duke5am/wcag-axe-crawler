@@ -1,12 +1,25 @@
 # wcag-axe-crawler
+[![PyPI](https://img.shields.io/pypi/v/wcag-axe-crawler)](https://pypi.org/project/wcag-axe-crawler/)
+
 Crawl a site with **axe-core** and get an aggregated WCAG violation report — JSON
 and readable HTML. Free, MIT.
 
 ```bash
-npm i axe-core            # or point --axe-path at an existing copy
+pip install wcag-axe-crawler[browser]   # from PyPI, Python 3.9+
+playwright install chromium             # the browser itself
+npm i axe-core                          # or point --axe-path at an existing copy
+wcag-axe-crawler --url https://example.com \
+    --axe-path node_modules/axe-core/axe.min.js --out report
+
+# or straight from a clone, no install:
 python3 audit/crawl.py --url https://example.com \
     --axe-path node_modules/axe-core/axe.min.js --out report
 ```
+
+Playwright is an extra, not a hard requirement: the crawler imports it only when
+it actually starts crawling, so `--help`, argument validation and `--axe-path`
+resolution all work without a browser installed, and a crawl without one exits 3
+with the install command instead of a traceback.
 
 ```
 Audited 5 page(s); 1 page(s) not audited.
@@ -19,7 +32,7 @@ Try it against the bundled deliberately-bad demo site:
 
 ```bash
 python3 examples/serve_demo.py &          # serves examples/demo-site on :8765
-python3 audit/crawl.py --url http://127.0.0.1:8765/ \
+wcag-axe-crawler --url http://127.0.0.1:8765/ \
     --axe-path node_modules/axe-core/axe.min.js --out report
 ```
 
@@ -55,8 +68,13 @@ effort on the parts a machine cannot see.
 
 ## Requirements
 
-Python 3.9+, Playwright with Chromium, and axe-core (`npm i axe-core`, MPL-2.0 —
-not bundled here). Set `AXE_CORE_PATH` instead of passing `--axe-path` each time.
+Python 3.9+, Playwright with Chromium (`pip install wcag-axe-crawler[browser] &&
+playwright install chromium` — or use your own interpreter that already has it),
+and axe-core (`npm i axe-core`, MPL-2.0 — not bundled here, because bundling
+third-party code would make its licence your problem). Set `AXE_CORE_PATH` instead
+of passing `--axe-path` each time. The axe-core 4.13.0 rule dump ships as package
+data for offline reference; the crawler reads its rules from axe-core in the
+browser, not from that file.
 
 ## The full pack
 
